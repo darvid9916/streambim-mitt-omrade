@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <title>Mitt område – StreamBIM</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <main id="app">
+    <header class="head">
+      <div>
+        <h1 data-i18n="title">Mitt område</h1>
+        <p id="who" class="muted" data-i18n="connecting">Ansluter till StreamBIM…</p>
+      </div>
+      <span id="mockBadge" class="badge" hidden>DEMO</span>
+    </header>
+
+    <section class="card" id="areaCard" hidden>
+      <div class="row">
+        <label><span data-i18n="contractor">Entreprenör</span>
+          <select id="contractorSel"></select>
+        </label>
+      </div>
+      <div class="row two">
+        <label><span data-i18n="floor">Våning</span>
+          <select id="floorSel"></select>
+        </label>
+        <label><span data-i18n="zone">Zon</span>
+          <select id="zoneSel"></select>
+        </label>
+      </div>
+      <p id="planNote" class="muted small"></p>
+      <div class="row buttons">
+        <button id="mineBtn" class="primary" data-i18n="onlyMine">Bara mina</button>
+        <button id="statusBtn" data-i18n="showStatus">Visa status</button>
+        <button id="resetBtn" class="ghost" data-i18n="reset">Återställ</button>
+      </div>
+      <label class="check"><input type="checkbox" id="followChk"> <span data-i18n="follow">Följ med när jag går in i ett rum</span></label>
+    </section>
+
+    <section class="card issue" id="issueCard" hidden>
+      <strong id="issueTitle"></strong>
+      <p id="issueHint" class="small"></p>
+      <div class="row buttons">
+        <button id="copyGuidBtn" data-i18n="copyGuid">Kopiera GUID</button>
+        <button id="closeIssueBtn" class="ghost" data-i18n="close">Stäng</button>
+      </div>
+    </section>
+
+    <section class="card" id="resultCard" hidden>
+      <div class="summary">
+        <strong id="countTxt"></strong>
+        <span id="roomTxt" class="muted small"></span>
+      </div>
+      <div id="legend" class="legend"></div>
+      <ul id="list" class="list"></ul>
+    </section>
+
+
+    <p id="error" class="error" hidden></p>
+  </main>
+
+  <script src="lib/streambim-widget-api.min.js"></script>
+  <script src="mock.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
