@@ -1,0 +1,21 @@
+{
+  "_info": "Enkel planeringstabell. Floor ska matcha våningsnamnet i StreamBIM (getFloors). Datum ISO, till och med 'to'.",
+  "entries": [
+    {
+      "contractorValue": "EL - Elbolaget AB",
+      "from": "2026-11-23",
+      "to": "2026-12-04",
+      "floor": "Plan 3",
+      "zone": "B",
+      "note": "Dosor och kabelstegar"
+    },
+    {
+      "contractorValue": "VE - Ventab AB",
+      "from": "2026-11-23",
+      "to": "2026-12-04",
+      "floor": "Plan 2",
+      "zone": "A",
+      "note": "Kanaler korridor"
+    }
+  ]
+}

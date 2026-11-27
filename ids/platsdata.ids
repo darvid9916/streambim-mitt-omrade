@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ids:ids xmlns:ids="http://standards.buildingsmart.org/IDS"
+         xmlns:xs="http://www.w3.org/2001/XMLSchema"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://standards.buildingsmart.org/IDS http://standards.buildingsmart.org/IDS/1.0/ids.xsd">
+  <ids:info>
+    <ids:title>Platsdata för widgeten Mitt område</ids:title>
+    <ids:version>0.1</ids:version>
+    <ids:description>Kräver Entreprenor, Zon och Byggdel i Pset Platsdata på alla byggdelar och installationsobjekt i alla delmodeller.</ids:description>
+    <ids:author>daniel.arvidsson@sweco.se</ids:author>
+    <ids:purpose>Filtrering per entreprenör och zon i StreamBIM</ids:purpose>
+  </ids:info>
+  <ids:specifications>
+    <ids:specification name="Platsdata på byggdelar och installationer" ifcVersion="IFC4"
+                       description="Entreprenör, zon och byggdel ska finnas och vara ifyllda.">
+      <ids:applicability minOccurs="1" maxOccurs="unbounded">
+        <ids:entity>
+          <ids:name>
+            <xs:restriction base="xs:string">
+              <xs:enumeration value="IFCWALL"/>
+              <xs:enumeration value="IFCSLAB"/>
+              <xs:enumeration value="IFCBEAM"/>
+              <xs:enumeration value="IFCCOLUMN"/>
+              <xs:enumeration value="IFCDOOR"/>
+              <xs:enumeration value="IFCWINDOW"/>
+              <xs:enumeration value="IFCCABLECARRIERSEGMENT"/>
+              <xs:enumeration value="IFCCABLECARRIERFITTING"/>
+              <xs:enumeration value="IFCJUNCTIONBOX"/>
+              <xs:enumeration value="IFCOUTLET"/>
+              <xs:enumeration value="IFCSWITCHINGDEVICE"/>
+              <xs:enumeration value="IFCLIGHTFIXTURE"/>
+              <xs:enumeration value="IFCDUCTSEGMENT"/>
+              <xs:enumeration value="IFCDUCTFITTING"/>
+              <xs:enumeration value="IFCAIRTERMINAL"/>
+              <xs:enumeration value="IFCPIPESEGMENT"/>
+              <xs:enumeration value="IFCPIPEFITTING"/>
+            </xs:restriction>
+          </ids:name>
+        </ids:entity>
+      </ids:applicability>
+      <ids:requirements>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet><ids:simpleValue>Platsdata</ids:simpleValue></ids:propertySet>
+          <ids:baseName><ids:simpleValue>Entreprenor</ids:simpleValue></ids:baseName>
+          <ids:value><xs:restriction base="xs:string"><xs:minLength value="1"/></xs:restriction></ids:value>
+        </ids:property>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet><ids:simpleValue>Platsdata</ids:simpleValue></ids:propertySet>
+          <ids:baseName><ids:simpleValue>Zon</ids:simpleValue></ids:baseName>
+          <ids:value><xs:restriction base="xs:string"><xs:minLength value="1"/></xs:restriction></ids:value>
+        </ids:property>
+        <ids:property dataType="IFCLABEL" cardinality="required">
+          <ids:propertySet><ids:simpleValue>Platsdata</ids:simpleValue></ids:propertySet>
+          <ids:baseName><ids:simpleValue>Byggdel</ids:simpleValue></ids:baseName>
+          <ids:value><xs:restriction base="xs:string"><xs:minLength value="1"/></xs:restriction></ids:value>
+        </ids:property>
+      </ids:requirements>
+    </ids:specification>
+  </ids:specifications>
+</ids:ids>

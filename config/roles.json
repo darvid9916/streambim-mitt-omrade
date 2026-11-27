@@ -1,0 +1,26 @@
+{
+  "_info": "Rolltabell. 'match' är en hel e-postadress eller en domän som börjar med @. Hel adress vinner över domän. 'contractorValue' är exakt det värde som står i egenskapen Entreprenor i modellen. null = användaren väljer själv (t.ex. samordnare).",
+  "users": [
+    {
+      "match": "@elbolaget.se",
+      "company": "Elbolaget AB",
+      "contractorValue": "EL - Elbolaget AB",
+      "discipline": "El",
+      "language": "sv"
+    },
+    {
+      "match": "@ventab.se",
+      "company": "Ventab AB",
+      "contractorValue": "VE - Ventab AB",
+      "discipline": "Ventilation",
+      "language": "sv"
+    },
+    {
+      "match": "@sweco.se",
+      "company": "Sweco",
+      "contractorValue": null,
+      "discipline": "BIM-samordning",
+      "language": "sv"
+    }
+  ]
+}
