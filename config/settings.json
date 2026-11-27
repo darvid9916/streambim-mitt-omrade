@@ -12,8 +12,18 @@
   "status": {
     "pset": "Egenkontroll",
     "key": "Status",
-    "doneValues": ["Klar", "OK", "Godkänd", "Ja", "Done"],
-    "colors": { "done": "4abb32", "todo": "e8a317", "missing": "9a9a9a" }
+    "doneValues": [
+      "Klar",
+      "OK",
+      "Godkänd",
+      "Ja",
+      "Done"
+    ],
+    "colors": {
+      "done": "4abb32",
+      "todo": "e8a317",
+      "missing": "9a9a9a"
+    }
   },
   "search": {
     "equalsOperator": "=",
@@ -23,5 +33,6 @@
   "issueHint": {
     "sv": "Objektet är markerat. Öppna StreamBIMs Ärenden-knapp i verktygsfältet och välj \"Nytt ärende\" – det markerade objektet följer med.",
     "en": "The object is selected. Open StreamBIM's Issues button in the toolbar and choose \"New issue\" – the selected object is attached."
-  }
+  },
+  "debug": true
 }

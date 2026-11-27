@@ -55,6 +55,40 @@
   function clearError() { $('error').hidden = true; }
   function first(v) { return Array.isArray(v) ? v[0] : v; }
 
+  // valuesForObjectProperty: formatet är odokumenterat. Tål lista, {values:[...]}, {värde: antal} m.m.
+  function toValueList(res) {
+    if (Array.isArray(res)) return res.map(v => (v && typeof v === 'object') ? (v.value ?? v.name ?? v.key ?? v.propValue ?? JSON.stringify(v)) : v);
+    if (res && typeof res === 'object') {
+      for (const k of ['values', 'data', 'result', 'results', 'items']) if (Array.isArray(res[k])) return toValueList(res[k]);
+      const vals = Object.values(res);
+      if (vals.length && vals.every(v => typeof v === 'string')) return vals;
+      return Object.keys(res);
+    }
+    if (typeof res === 'string') return res ? [res] : [];
+    return [];
+  }
+  function toObjectList(res) {
+    if (Array.isArray(res)) return res;
+    if (res && typeof res === 'object') {
+      for (const k of ['objects', 'values', 'data', 'result', 'results', 'items']) if (Array.isArray(res[k])) return res[k];
+      return Object.values(res).filter(x => x && typeof x === 'object');
+    }
+    return [];
+  }
+  // Felsökning: sätt "debug": true i config/settings.json för att se StreamBIMs råa svar i panelen
+  function debug(label, data) {
+    if (!S.settings || !S.settings.debug) return;
+    let pre = document.getElementById('debug');
+    if (!pre) {
+      pre = document.createElement('pre'); pre.id = 'debug';
+      pre.style.cssText = 'white-space:pre-wrap;word-break:break-all;font-size:11px;background:#111;color:#9fe;padding:8px;border-radius:6px;user-select:text;';
+      document.getElementById('app').appendChild(pre);
+    }
+    let txt; try { txt = JSON.stringify(data); } catch (_) { txt = String(data); }
+    pre.textContent += `${label} (${Array.isArray(data) ? 'array' : typeof data}): ${String(txt).slice(0, 1500)}\n\n`;
+    console.info('[debug]', label, data);
+  }
+
   // Robust egenskapsläsning: ObjectInfo-formatet är inte fullt dokumenterat.
   function getProp(info, pset, key) {
     if (!info || !key) return undefined;
@@ -138,7 +172,9 @@
       await api.setSearchVisualizationMode('FADED');
       await api.zoomToSearchResult();
       const infos = await api.getObjectInfoForSearch(q);
-      S.objects = (infos || []).map(i => ({
+      debug('getObjectInfoForSearch (första objektet)', Array.isArray(infos) ? infos[0] : infos);
+      debug('sökfråga', q);
+      S.objects = toObjectList(infos).map(i => ({
         guid: guidOf(i), name: nameOf(i), center: i.center,
         part: getProp(i, S.settings.properties.pset, S.settings.properties.buildingPart) || '',
         room: S.settings.properties.room ? getProp(i, S.settings.properties.pset, S.settings.properties.room) : null,
@@ -295,7 +331,9 @@
       const [email, buildingId, floors] = await Promise.all([
         api.getUserEmail(), api.getBuildingId(), api.getFloors().catch(() => [])
       ]);
-      S.email = email; S.buildingId = buildingId; S.floors = floors || [];
+      debug('getUserEmail / getBuildingId', { email, buildingId });
+      debug('getFloors', floors);
+      S.email = email; S.buildingId = buildingId; S.floors = Array.isArray(floors) ? floors : [];
       S.role = lookupRole(email);
       if (S.role && S.role.language && T[S.role.language]) S.lang = S.role.language;
       translateUI();
@@ -307,8 +345,8 @@
 
       const P = S.settings.properties;
       const [contractors, zones] = await Promise.all([
-        api.valuesForObjectProperty(P.pset + '~' + P.contractor).catch(() => []),
-        api.valuesForObjectProperty(P.pset + '~' + P.zone).catch(() => [])
+        api.valuesForObjectProperty(P.pset + '~' + P.contractor).then(r => { debug('valuesForObjectProperty ' + P.pset + '~' + P.contractor, r); return toValueList(r); }).catch(e => { debug('valuesForObjectProperty FEL', e); return []; }),
+        api.valuesForObjectProperty(P.pset + '~' + P.zone).then(r => { debug('valuesForObjectProperty ' + P.pset + '~' + P.zone, r); return toValueList(r); }).catch(e => { debug('valuesForObjectProperty FEL', e); return []; })
       ]);
       const cList = Array.from(new Set((contractors || []).map(lastSeg).concat(S.role && S.role.contractorValue ? [S.role.contractorValue] : []))).sort();
       const zList = Array.from(new Set((zones || []).map(lastSeg))).sort();
