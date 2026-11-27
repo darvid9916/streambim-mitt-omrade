@@ -348,8 +348,8 @@
         api.valuesForObjectProperty(P.pset + '~' + P.contractor).then(r => { debug('valuesForObjectProperty ' + P.pset + '~' + P.contractor, r); return toValueList(r); }).catch(e => { debug('valuesForObjectProperty FEL', e); return []; }),
         api.valuesForObjectProperty(P.pset + '~' + P.zone).then(r => { debug('valuesForObjectProperty ' + P.pset + '~' + P.zone, r); return toValueList(r); }).catch(e => { debug('valuesForObjectProperty FEL', e); return []; })
       ]);
-      const cList = Array.from(new Set((contractors || []).map(lastSeg).concat(S.role && S.role.contractorValue ? [S.role.contractorValue] : []))).sort();
-      const zList = Array.from(new Set((zones || []).map(lastSeg))).sort();
+      const cList = Array.from(new Set(toValueList(contractors).map(lastSeg).concat(S.role && S.role.contractorValue ? [S.role.contractorValue] : []))).sort();
+      const zList = Array.from(new Set(toValueList(zones).map(lastSeg))).sort();
 
       fillSelect($('contractorSel'), cList, t('choose'), S.role ? S.role.contractorValue : '');
       $('contractorSel').disabled = !!(S.role && S.role.contractorValue);
